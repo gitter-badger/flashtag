@@ -52,6 +52,7 @@
                     //$('#dropzone-image').removeClass('dz-clickable'); // remove cursor
                     //$('#dropzone-image')[0].removeEventListener('click', this.listeners[1].events.click);
                 }).on('maxfilesexceeded', function (file) {
+                    // TODO: Make a notification where use chooses between fil and this.image
                     this.removeFile(file);
                 }).on('removedfile', function (file) {
                     this.delete(file);
