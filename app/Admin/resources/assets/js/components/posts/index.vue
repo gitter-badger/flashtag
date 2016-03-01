@@ -82,8 +82,6 @@
 </template>
 
 <script>
-    import moment from 'moment';
-    import swal from 'sweetalert';
     import Post from '../../models/post';
     import Category from '../../models/category';
     import User from '../../models/user';
@@ -119,8 +117,8 @@
         methods: {
 
             fetchPosts: function() {
-                this.$http.get('posts?include=category&orderBy=updated_at|desc&count=1000').then(function (response) {
-                    this.$set('posts', response.data.data.map(function (post) {
+                this.$http.get('posts').then(function (response) {
+                    this.$set('posts', response.data.map(function (post) {
                         return new Post(post);
                     }));
                 });
@@ -128,7 +126,7 @@
 
             fetchCategories: function () {
                 this.$http.get('categories').then(function (response) {
-                    this.$set('categories', response.data.data.map(function (category) {
+                    this.$set('categories', response.data.map(function (category) {
                         return new Category(category);
                     }));
                 });
@@ -136,7 +134,7 @@
 
             fetchUsers: function () {
                 this.$http.get('users').then(function (response) {
-                    this.$set('users', response.data.data.map(function (user) {
+                    this.$set('users', response.data.map(function (user) {
                         return new User(user);
                     }));
                 });
@@ -163,7 +161,7 @@
             },
 
             userName: function (userId) {
-                if (! userId || ! this.users || !this.users.length) {
+                if (!userId || !this.users || !this.users.length) {
                     return '';
                 }
 
