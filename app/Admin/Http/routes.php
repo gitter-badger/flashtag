@@ -28,6 +28,8 @@ $router->group(['middleware' => 'auth'], function ($router) {
     $router->get('media/preview/{type}', 'MediaController@preview');
     // Admin API
     $router->group(['prefix' => 'api'], function ($router) {
+        $router->patch('posts/{post}/lock', 'Api\PostsController@lock');
+        $router->patch('posts/{post}/unlock', 'Api\PostsController@unlock');
         $router->resource('posts', 'Api\PostsController', ['only' => ['index', 'store', 'update']]);
         $router->resource('post-fields', 'Api\PostFieldsController', ['only' => ['index', 'store', 'update']]);
         $router->resource('post-lists', 'Api\PostListsController', ['only' => ['index', 'store', 'update']]);

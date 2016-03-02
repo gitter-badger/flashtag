@@ -28,6 +28,22 @@ class PostsController extends Controller
         return response('ok');
     }
 
+    public function lock($id)
+    {
+        $post = Post::findOrFail($id);
+        $post->is_locked = true;
+        $post->locked_by_id = \Auth::user()->id;
+        $post->save();
+    }
+
+    public function unlock($id)
+    {
+        $post = Post::findOrFail($id);
+        $post->is_locked = false;
+        $post->locked_by_id = null;
+        $post->save();
+    }
+
     /**
      * Build the post data array from the request.
      *

@@ -13,7 +13,7 @@
 
         <section class="info row">
             <div class="col-md-6 clearfix">
-                <!--
+                <!-- TODO: Post revisions
                 <a href="/admin/posts/{{ $post->id }}/revisions" class="btn btn-link">
                     <i class="fa fa-history"></i> Revision history
                 </a>
@@ -36,6 +36,9 @@
 
 @section('scripts')
     <script>
+        // CSRF token
+        var csrf = "{{ csrf_token() }}";
+
         $(document).ready(function(){
 
             // Unlock the post when user leaves
@@ -60,11 +63,9 @@
 
         function unlock(){
             $.ajax({
-                url: "/api/posts/{{ $post->id }}/unlock",
+                url: "/admin/api/posts/{{ $post->id }}/unlock",
                 method: "PATCH",
-                headers: {
-                    Authorization: localStorage.getItem('jwt-token')
-                }
+                headers: { "X-CSRF-TOKEN": csrf }
             });
         }
 
@@ -81,9 +82,9 @@
                 showLoaderOnConfirm: true
             }, function () {
                 $.ajax({
-                    url: '/api/posts/{{ $post->id }}',
+                    url: '/admin/api/posts/{{ $post->id }}',
                     method: 'DELETE',
-                    headers: { Authorization: localStorage.getItem('jwt-token') }
+                    headers: { "X-CSRF-TOKEN": csrf }
                 }).done(function(){
                     self.deleted = true;
                     window.location = '/admin/posts';
